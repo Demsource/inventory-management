@@ -1,0 +1,12 @@
+ul.pagination li.page-item span.page-link {
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+ul.pagination li.total {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}

@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+.app-header {
+  margin-bottom: 10px;
+  align-self: end;
+}
+.app-header .add-btn a {
+  color: white;
+  text-decoration: none;
+}

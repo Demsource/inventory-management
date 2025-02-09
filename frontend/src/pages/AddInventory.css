@@ -1,0 +1,25 @@
+.add-inventory-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.add-inventory-wrapper .add-inventory .input-wrapper {
+  margin-bottom: 20px;
+}
+
+.add-inventory-wrapper .add-inventory .input-wrapper label {
+  width: 200px;
+}
+
+.add-inventory-wrapper .add-inventory .input-wrapper.add-btn {
+  display: flex;
+  justify-content: end;
+}
+
+.add-inventory-wrapper .add-inventory .input-wrapper.add-btn button {
+  padding: 10px;
+  border-radius: 10px;
+}
