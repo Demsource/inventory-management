@@ -3,9 +3,25 @@
   flex-direction: column;
 }
 .app-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
   margin-bottom: 10px;
-  align-self: end;
 }
+
+.app-header .filter .input-wrapper .form-floating .form-select {
+  width: 300px;
+  padding: 0;
+  padding-left: 20px;
+}
+
+.app-header .statistics-and-addition {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .app-header .add-btn a {
   color: white;
   text-decoration: none;

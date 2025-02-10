@@ -28,45 +28,42 @@ const Table: React.FC<TableProps> = ({
   };
 
   return (
-    <>
-      <table className="table table-dark table-striped text-center">
-        <thead>
+    <table className="table table-dark table-striped text-center">
+      <thead>
+        <tr>
+          <th>ნივთის სახელი</th>
+          <th>ნივთის ადგილმდებარეობა</th>
+          <th>ფასი (₾)</th>
+          <th>ოპერაციები</th>
+        </tr>
+      </thead>
+      <tbody>
+        {pageInventories?.length > 0 ? (
+          pageInventories.map((inventory: any, i: number) => {
+            return (
+              <tr key={i}>
+                <th>{inventory?.name}</th>
+                <td>
+                  {
+                    locations?.find(
+                      (location: any) => location.id === inventory?.location_id
+                    )?.name
+                  }
+                </td>
+                <td>{inventory?.price}</td>
+                <td onClick={() => handleDelete(inventory.id)}>
+                  <DeleteIcon />
+                </td>
+              </tr>
+            );
+          })
+        ) : (
           <tr>
-            <th>ნივთის სახელი</th>
-            <th>ნივთის ადგილმდებარეობა</th>
-            <th>ფასი (₾)</th>
-            <th>ოპერაციები</th>
+            <td colSpan={4}>No inventory found</td>
           </tr>
-        </thead>
-        <tbody>
-          {pageInventories?.length > 0 ? (
-            pageInventories.map((inventory: any, i: number) => {
-              return (
-                <tr key={i}>
-                  <th>{inventory?.name}</th>
-                  <td>
-                    {
-                      locations?.find(
-                        (location: any) =>
-                          location.id === inventory?.location_id
-                      )?.name
-                    }
-                  </td>
-                  <td>{inventory?.price}</td>
-                  <td onClick={() => handleDelete(inventory.id)}>
-                    <DeleteIcon />
-                  </td>
-                </tr>
-              );
-            })
-          ) : (
-            <tr>
-              <td colSpan={4}>No inventory found</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </>
+        )}
+      </tbody>
+    </table>
   );
 };
 

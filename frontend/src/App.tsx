@@ -15,23 +15,23 @@ function App() {
   const [locationsError, setLocationsError] = useState<any>(null);
   const [loadingLocations, setLoadingLocations] = useState<boolean>(false);
 
+  const [locationId, setLocationId] = useState("all");
+
   const [limit, setLimit] = useState(20);
   const [offset, setOffset] = useState(0);
   const [page, setPage] = useState(1);
 
   const fetchInventories = async () => {
-    console.log("fetchInventories");
     setLoadingInventories(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/inventories?limit=${limit}&offset=${offset}`
+        `http://localhost:5000/inventories?limit=${limit}&offset=${offset}&location_id=${locationId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
         5;
       }
       const jsonData = await response.json();
-      console.log(jsonData);
       setInventories(jsonData);
     } catch (err) {
       setInventoriesError(err);
@@ -59,7 +59,7 @@ function App() {
   useEffect(() => {
     fetchInventories();
     fetchLocations();
-  }, [limit, offset]);
+  }, [limit, offset, locationId]);
 
   useEffect(() => {
     setOffset((page - 1) * limit);
@@ -93,6 +93,8 @@ function App() {
               limit={limit}
               page={page}
               setPage={setPage}
+              locationId={locationId}
+              setLocationId={setLocationId}
             />
           }
         />
