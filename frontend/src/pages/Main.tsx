@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Table from "../components/Table";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import "./Main.css";
 import ModalStatistics from "../components/ModalStatistics";
 import { Button } from "react-bootstrap";
 import Filter from "../components/Filter";
+import Sort from "../components/Sort";
 
 interface MainProps {
   inventories: any;
@@ -16,6 +17,8 @@ interface MainProps {
   setPage: any;
   locationId: any;
   setLocationId: any;
+  sortBy: any;
+  setSortBy: any;
 }
 
 const Main: React.FC<MainProps> = ({
@@ -27,6 +30,8 @@ const Main: React.FC<MainProps> = ({
   setPage,
   locationId,
   setLocationId,
+  sortBy,
+  setSortBy,
 }) => {
   const [showStatistics, setShowStatistics] = useState(false); // State to manage statistics modal visibility
 
@@ -39,13 +44,14 @@ const Main: React.FC<MainProps> = ({
   return (
     <div className="main">
       <div className="app-header">
-        <div className="filter">
+        <div className="filter-and-sort">
           <Filter
             locationId={locationId}
             setLocationId={setLocationId}
             locations={locations}
             setPage={setPage}
           />
+          <Sort sortBy={sortBy} setSortBy={setSortBy} setPage={setPage} />
         </div>
         <div className="statistics-and-addition">
           <Button

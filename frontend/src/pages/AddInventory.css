@@ -6,6 +6,10 @@
   margin-top: 50px;
 }
 
+.add-inventory-wrapper .app-header.go-to-home {
+  align-self: flex-end;
+}
+
 .add-inventory-wrapper .add-inventory .input-wrapper {
   margin-bottom: 20px;
 }

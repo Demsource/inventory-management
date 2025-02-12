@@ -49,7 +49,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
 
   return (
     <div className="add-inventory-wrapper">
-      <div className="app-header">
+      <div className="app-header go-to-home">
         <Link to={"/"}>
           <button type="button" className="btn btn-dark add-btn">
             Back to Home Page

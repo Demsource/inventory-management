@@ -22,19 +22,19 @@ const ModalStatistics: React.FC<ModalStatisticsProps> = ({
     for (const location of locations) {
       try {
         const responseTotalCount = await fetch(
-          `http://localhost:5000/inventories/count/${location.id}`
+          `http://localhost:5000/inventories?count=${location.id}`
         );
         const dataTotalCount = await responseTotalCount.json();
 
         const responseTotalPrice = await fetch(
-          `http://localhost:5000/inventories/price/${location.id}`
+          `http://localhost:5000/inventories?price=${location.id}`
         );
         const dataTotalPrices = await responseTotalPrice.json();
 
         countAndPriceData.push({
           id: location.id,
           name: location.name,
-          count: dataTotalCount.count,
+          count: dataTotalCount.total,
           price: dataTotalPrices.price,
         });
       } catch (error) {

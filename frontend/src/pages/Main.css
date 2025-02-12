@@ -8,9 +8,13 @@
   gap: 20px;
   margin-bottom: 10px;
 }
+.app-header .filter-and-sort {
+  display: flex;
+  gap: 50px;
+}
 
-.app-header .filter .input-wrapper .form-floating .form-select {
-  width: 300px;
+.app-header .filter-and-sort .input-wrapper .form-floating .form-select {
+  width: 230px;
   padding: 0;
   padding-left: 20px;
 }

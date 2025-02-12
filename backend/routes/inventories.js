@@ -3,70 +3,46 @@ const router = express.Router();
 // const db = require("../config/database");
 const Inventory = require("../models/Inventory");
 
-// Get inventory list
+// Get inventory list and related data
 router.get("/", async (req, res) => {
-  const { limit, offset, location_id } = req.query;
+  const { limit, offset, count, price } = req.query;
+  const data = {};
 
   try {
     const options = {
       where: {},
     };
 
-    if (location_id && location_id !== "all") {
-      options.where.location_id = location_id;
+    if (count && count !== "all") {
+      options.where.location_id = count;
     }
 
-    const totalInventories = await Inventory.count(options);
+    if (limit && offset) {
+      data.inventories = await Inventory.findAll({
+        limit: parseInt(limit),
+        offset: parseInt(offset),
+        ...options,
+      });
+    }
 
-    const inventories = await Inventory.findAll({
-      limit: parseInt(limit),
-      offset: parseInt(offset),
-      ...options,
-    });
+    if (count) {
+      data.total = await Inventory.count(options);
+    }
 
-    res.send({
-      total: totalInventories,
-      inventories,
-    });
+    if (price) {
+      data.price = await Inventory.sum("price", {
+        where: {
+          location_id: price,
+        },
+      });
+    }
+
+    res.send(data);
   } catch (error) {
     console.log("Error occurred: ", err);
     res
       .status(500)
-      .json({ error: "An error occurred while fetching inventories." });
-  }
-});
-
-// Get inventory count by location
-router.get("/count/:id", async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const count = await Inventory.count({
-      where: {
-        location_id: id,
-      },
-    });
-    res.json({ count });
-  } catch (error) {
-    console.error("Error counting inventories:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-// Get sum of an inventory prices for each location
-router.get("/price/:id", async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const price = await Inventory.sum("price", {
-      where: {
-        location_id: id,
-      },
-    });
-    res.json({ price });
-  } catch (error) {
-    console.error("Error counting prices:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+      .json({ error: "An error occurred while fetching inventories data" });
   }
 });
 
