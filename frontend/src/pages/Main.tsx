@@ -51,7 +51,11 @@ const Main: React.FC<MainProps> = ({
             locations={locations}
             setPage={setPage}
           />
-          <Sort sortOption={sortOption} setSortOption={setSortOption} setPage={setPage} />
+          <Sort
+            sortOption={sortOption}
+            setSortOption={setSortOption}
+            setPage={setPage}
+          />
         </div>
         <div className="statistics-and-addition">
           <Button
@@ -68,7 +72,7 @@ const Main: React.FC<MainProps> = ({
           </Link>
         </div>
       </div>
-      <Table pageInventories={inventories} locations={locations} />
+      <Table inventories={inventories} locations={locations} />
       <Pagination
         page={page}
         limit={limit}

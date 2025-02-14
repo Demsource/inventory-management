@@ -20,12 +20,12 @@ const Sort: React.FC<SortProps> = ({ sortOption, setSortOption, setPage }) => {
           }}
           required
         >
-          <option value={"name_ASC"}>სახელით ^</option>
-          <option value={"name_DESC"}>სახელით v</option>
-          <option value={"location_ASC"}>ადგილმდებარეობით ^</option>
-          <option value={"location_DESC"}>ადგილმდებარეობით v</option>
-          <option value={"price_ASC"}>ფასით ^</option>
-          <option value={"price_DESC"}>ფასით v</option>
+          <option value={"name_ASC"}>სახელით (^)</option>
+          <option value={"name_DESC"}>სახელით (v)</option>
+          <option value={"location_ASC"}>ადგილმდებარეობით (^)</option>
+          <option value={"location_DESC"}>ადგილმდებარეობით (v)</option>
+          <option value={"price_ASC"}>ფასით (^)</option>
+          <option value={"price_DESC"}>ფასით (v)</option>
         </select>
       </div>
     </div>

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import DeleteIcon from "./icons/DeleteIcon";
 import { useNavigate } from "react-router-dom";
 interface TableProps {
-  pageInventories: any;
+  inventories: any;
   locations: any;
 }
 
 const Table: React.FC<TableProps> = ({
-  pageInventories,
+  inventories,
   locations,
 }: TableProps) => {
   const navigate = useNavigate();
@@ -38,8 +38,8 @@ const Table: React.FC<TableProps> = ({
         </tr>
       </thead>
       <tbody>
-        {pageInventories?.length > 0 ? (
-          pageInventories.map((inventory: any, i: number) => {
+        {inventories?.length > 0 ? (
+          inventories.map((inventory: any, i: number) => {
             return (
               <tr key={i}>
                 <th>{inventory?.name}</th>

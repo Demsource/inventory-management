@@ -46,7 +46,14 @@ function App() {
   const fetchLocations = async () => {
     setLoadingLocations(true);
     try {
-      const response = await fetch("http://localhost:5000/locations");
+      const response = await fetch(
+        sortOption &&
+          (sortOption === "location_ASC" || sortOption === "location_DESC")
+          ? `http://localhost:5000/locations?sortBy=${
+              sortOption.split("_")[0]
+            }&order=${sortOption.split("_")[1]}`
+          : "http://localhost:5000/locations"
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
