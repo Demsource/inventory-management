@@ -1,28 +1,31 @@
 import React from "react";
 
 interface SortProps {
-  sortBy: any;
-  setSortBy: any;
+  sortOption: any;
+  setSortOption: any;
   setPage: any;
 }
 
-const Sort: React.FC<SortProps> = ({ sortBy, setSortBy, setPage }) => {
+const Sort: React.FC<SortProps> = ({ sortOption, setSortOption, setPage }) => {
   return (
     <div className="input-wrapper">
       <div className="form-floating">
         <select
           className="form-select"
           id="options"
-          value={sortBy}
+          value={sortOption}
           onChange={(e) => {
-            setSortBy(e.target.value);
+            setSortOption(e.target.value);
             setPage(1);
           }}
           required
         >
-          <option value={"byName"}>სახელით</option>
-          <option value={"byLocation"}>ადგილმდებარეობით</option>
-          <option value={"byPrice"}>ფასით</option>
+          <option value={"name_ASC"}>სახელით ^</option>
+          <option value={"name_DESC"}>სახელით v</option>
+          <option value={"location_ASC"}>ადგილმდებარეობით ^</option>
+          <option value={"location_DESC"}>ადგილმდებარეობით v</option>
+          <option value={"price_ASC"}>ფასით ^</option>
+          <option value={"price_DESC"}>ფასით v</option>
         </select>
       </div>
     </div>

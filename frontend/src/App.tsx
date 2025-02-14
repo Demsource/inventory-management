@@ -16,7 +16,7 @@ function App() {
   const [loadingLocations, setLoadingLocations] = useState<boolean>(false);
 
   const [locationId, setLocationId] = useState("all");
-  const [sortBy, setSortBy] = useState("byName");
+  const [sortOption, setSortOption] = useState("name_ASC");
 
   const [limit, setLimit] = useState(20);
   const [offset, setOffset] = useState(0);
@@ -26,7 +26,9 @@ function App() {
     setLoadingInventories(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/inventories?limit=${limit}&offset=${offset}&count=${locationId}`
+        `http://localhost:5000/inventories?limit=${limit}&offset=${offset}&count=${locationId}&sortBy=${
+          sortOption.split("_")[0]
+        }&order=${sortOption.split("_")[1]}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -60,7 +62,7 @@ function App() {
   useEffect(() => {
     fetchInventories();
     fetchLocations();
-  }, [limit, offset, locationId]);
+  }, [limit, offset, locationId, sortOption]);
 
   useEffect(() => {
     setOffset((page - 1) * limit);
@@ -96,8 +98,8 @@ function App() {
               setPage={setPage}
               locationId={locationId}
               setLocationId={setLocationId}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
+              sortOption={sortOption}
+              setSortOption={setSortOption}
             />
           }
         />

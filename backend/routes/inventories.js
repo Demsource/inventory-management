@@ -5,16 +5,21 @@ const Inventory = require("../models/Inventory");
 
 // Get inventory list and related data
 router.get("/", async (req, res) => {
-  const { limit, offset, count, price } = req.query;
+  const { limit, offset, count, price, sortBy, order } = req.query;
   const data = {};
 
   try {
     const options = {
       where: {},
+      order: [],
     };
 
     if (count && count !== "all") {
       options.where.location_id = count;
+    }
+
+    if (sortBy && order) {
+      options.order = [[sortBy, order]];
     }
 
     if (limit && offset) {

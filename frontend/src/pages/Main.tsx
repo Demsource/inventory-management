@@ -17,8 +17,8 @@ interface MainProps {
   setPage: any;
   locationId: any;
   setLocationId: any;
-  sortBy: any;
-  setSortBy: any;
+  sortOption: any;
+  setSortOption: any;
 }
 
 const Main: React.FC<MainProps> = ({
@@ -30,8 +30,8 @@ const Main: React.FC<MainProps> = ({
   setPage,
   locationId,
   setLocationId,
-  sortBy,
-  setSortBy,
+  sortOption,
+  setSortOption,
 }) => {
   const [showStatistics, setShowStatistics] = useState(false); // State to manage statistics modal visibility
 
@@ -51,7 +51,7 @@ const Main: React.FC<MainProps> = ({
             locations={locations}
             setPage={setPage}
           />
-          <Sort sortBy={sortBy} setSortBy={setSortBy} setPage={setPage} />
+          <Sort sortOption={sortOption} setSortOption={setSortOption} setPage={setPage} />
         </div>
         <div className="statistics-and-addition">
           <Button
