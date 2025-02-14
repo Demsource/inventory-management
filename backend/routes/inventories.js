@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const db = require("../config/database");
 const Inventory = require("../models/Inventory");
 
 // Get inventory list and related data
@@ -18,7 +17,7 @@ router.get("/", async (req, res) => {
       options.where.location_id = count;
     }
 
-    if (sortBy && order) {
+    if (sortBy && order && sortBy !== "location") {
       options.order = [[sortBy, order]];
     }
 
