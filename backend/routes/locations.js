@@ -5,19 +5,7 @@ const db = require("../config/database");
 
 // Get location list
 router.get("/", (req, res) => {
-  const { sortBy, order } = req.query;
-
-  const options = { order: [] };
-
-  if (sortBy && order && sortBy === "location") {
-    options.order = [
-      [db.literal('"name" COLLATE "ka-GE-x-icu"'), order],
-    ];
-  }
-
-  Location.findAll({
-    ...options,
-  })
+  Location.findAll()
     .then((locations) => {
       console.log(locations);
       res.send(locations);

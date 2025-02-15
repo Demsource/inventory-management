@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Inventory = require("../models/Inventory");
+const Location = require("../models/Location");
+const db = require("../config/database");
+const { literal } = require("sequelize");
 
 // Get inventory list and related data
 router.get("/", async (req, res) => {
@@ -19,6 +22,28 @@ router.get("/", async (req, res) => {
 
     if (sortBy && order && sortBy !== "location") {
       options.order = [[sortBy, order]];
+    }
+
+    if (sortBy && order && sortBy === "location") {
+      console.log("order:", order); 
+      // Get sorted locations
+      const locations = await Location.findAll({
+        order: [[db.literal('"name" COLLATE "ka-GE-x-icu"'), order]],
+      });
+      // Get array of sorted location ids (ka_GE)
+      const orderedLocationIds = locations.map((location) => location.id);
+      console.log(orderedLocationIds);
+
+      const caseStatement = `CASE ${orderedLocationIds
+        .map(
+          (locationId, index) =>
+            `WHEN "location_id" = '${locationId}' THEN ${index + 1}`
+        )
+        .join(" ")} ELSE ${orderedLocationIds.length + 1} END`;
+
+      const sortDirection = order.toUpperCase() === "DESC" ? "DESC" : "ASC";
+
+      options.order = [[literal(caseStatement), sortDirection]];
     }
 
     if (limit && offset) {
@@ -43,7 +68,7 @@ router.get("/", async (req, res) => {
 
     res.send(data);
   } catch (error) {
-    console.log("Error occurred: ", err);
+    console.log("Error occurred: ", error);
     res
       .status(500)
       .json({ error: "An error occurred while fetching inventories data" });
