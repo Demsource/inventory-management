@@ -25,7 +25,6 @@ router.get("/", async (req, res) => {
     }
 
     if (sortBy && order && sortBy === "location") {
-      console.log("order:", order); 
       // Get sorted locations
       const locations = await Location.findAll({
         order: [[db.literal('"name" COLLATE "ka-GE-x-icu"'), order]],
@@ -41,9 +40,7 @@ router.get("/", async (req, res) => {
         )
         .join(" ")} ELSE ${orderedLocationIds.length + 1} END`;
 
-      const sortDirection = order.toUpperCase() === "DESC" ? "DESC" : "ASC";
-
-      options.order = [[literal(caseStatement), sortDirection]];
+      options.order = [[literal(caseStatement), "ASC"]];
     }
 
     if (limit && offset) {
