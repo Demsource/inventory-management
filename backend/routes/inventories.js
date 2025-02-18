@@ -31,7 +31,6 @@ router.get("/", async (req, res) => {
       });
       // Get array of sorted location ids (ka_GE)
       const orderedLocationIds = locations.map((location) => location.id);
-      console.log(orderedLocationIds);
 
       const caseStatement = `CASE ${orderedLocationIds
         .map(
