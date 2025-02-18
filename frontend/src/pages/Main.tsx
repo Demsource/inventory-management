@@ -19,6 +19,7 @@ interface MainProps {
   setLocationId: any;
   sortOption: any;
   setSortOption: any;
+  handleDeleteInventory: any;
 }
 
 const Main: React.FC<MainProps> = ({
@@ -32,6 +33,7 @@ const Main: React.FC<MainProps> = ({
   setLocationId,
   sortOption,
   setSortOption,
+  handleDeleteInventory,
 }) => {
   const [showStatistics, setShowStatistics] = useState(false); // State to manage statistics modal visibility
 
@@ -72,7 +74,11 @@ const Main: React.FC<MainProps> = ({
           </Link>
         </div>
       </div>
-      <Table inventories={inventories} locations={locations} />
+      <Table
+        inventories={inventories}
+        locations={locations}
+        handleDeleteInventory={handleDeleteInventory}
+      />
       <Pagination
         page={page}
         limit={limit}

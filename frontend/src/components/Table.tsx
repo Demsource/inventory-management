@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 import DeleteIcon from "./icons/DeleteIcon";
-import { useNavigate } from "react-router-dom";
 interface TableProps {
   inventories: any;
   locations: any;
+  handleDeleteInventory: any;
 }
 
 const Table: React.FC<TableProps> = ({
   inventories,
   locations,
+  handleDeleteInventory,
 }: TableProps) => {
-  const navigate = useNavigate();
-
   const handleDelete = async (id: any) => {
     try {
       const response = await fetch(`http://localhost:5000/inventories/${id}`, {
         method: "DELETE",
       });
       if (response.ok) {
-        navigate(0);
+        handleDeleteInventory();
       } else {
         console.error("Error deleting inventory");
       }

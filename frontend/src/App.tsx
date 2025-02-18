@@ -68,6 +68,14 @@ function App() {
     setOffset((page - 1) * limit);
   }, [page]);
 
+  const handleDeleteInventory = () => {
+    fetchInventories().then(() => {
+      if (inventories?.inventories?.length === 1 && page > 1) {
+        setPage((prevPage) => prevPage - 1);
+      }
+    });
+  };
+
   // console.log({ inventories }, { locations });
 
   if (loadingInventories || loadingLocations) {
@@ -100,6 +108,7 @@ function App() {
               setLocationId={setLocationId}
               sortOption={sortOption}
               setSortOption={setSortOption}
+              handleDeleteInventory={handleDeleteInventory}
             />
           }
         />
