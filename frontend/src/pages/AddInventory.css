@@ -18,6 +18,21 @@
   width: 200px;
 }
 
+.add-inventory-wrapper .add-inventory .input-wrapper.location-input {
+  display: flex;
+}
+
+.add-inventory-wrapper
+  .add-inventory
+  .input-wrapper.location-input
+  .form-select {
+  width: 200px;
+}
+
+.add-inventory-wrapper .add-inventory .input-wrapper input {
+  width: 200px;
+}
+
 .add-inventory-wrapper .add-inventory .input-wrapper.add-btn {
   display: flex;
   justify-content: end;

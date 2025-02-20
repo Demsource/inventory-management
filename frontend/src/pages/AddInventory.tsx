@@ -9,9 +9,7 @@ interface AddInventoryProps {
 const AddInventory: React.FC<AddInventoryProps> = ({
   locations,
 }: AddInventoryProps) => {
-  const [location, setLocation] = useState(
-    "4d3d9dc7-d98b-47f8-90ee-c2aa0abc32f1"
-  );
+  const [location, setLocation] = useState(locations[0]?.id);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
@@ -57,9 +55,10 @@ const AddInventory: React.FC<AddInventoryProps> = ({
         </Link>
       </div>
       <form action="#" onSubmit={handleSubmit} className="add-inventory">
-        <div className="input-wrapper">
+        <div className="input-wrapper location-input">
           <label htmlFor="options">ადგილმდებარეობა:</label>
           <select
+            className="form-select"
             id="options"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
