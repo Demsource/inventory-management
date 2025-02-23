@@ -1,22 +1,26 @@
 import React from "react";
 
-interface SortProps {
-  sortOption: any;
-  setSortOption: any;
-  setPage: any;
+interface SortInventoriesProps {
+  inventorySortOption: any;
+  setInventorySortOption: any;
+  setPageInventories: any;
 }
 
-const Sort: React.FC<SortProps> = ({ sortOption, setSortOption, setPage }) => {
+const SortInventories: React.FC<SortInventoriesProps> = ({
+  inventorySortOption,
+  setInventorySortOption,
+  setPageInventories,
+}) => {
   return (
     <div className="input-wrapper">
       <div className="form-floating">
         <select
           className="form-select"
           id="options"
-          value={sortOption}
+          value={inventorySortOption}
           onChange={(e) => {
-            setSortOption(e.target.value);
-            setPage(1);
+            setInventorySortOption(e.target.value);
+            setPageInventories(1);
           }}
           required
         >
@@ -32,4 +36,4 @@ const Sort: React.FC<SortProps> = ({ sortOption, setSortOption, setPage }) => {
   );
 };
 
-export default Sort;
+export default SortInventories;

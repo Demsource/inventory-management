@@ -1,0 +1,35 @@
+.location-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  
+  .location-form-wrapper .location-form-header.go-to-locations {
+    align-self: flex-end;
+  }
+  
+  .location-form-wrapper .location-form .input-wrapper {
+    margin-bottom: 20px;
+  }
+  
+  .location-form-wrapper .location-form .input-wrapper label {
+    display: flex;
+      margin-bottom: 10px;
+  }
+  
+  .location-form-wrapper .location-form .input-wrapper input {
+    width: 300px;
+  }
+  
+  .location-form-wrapper .location-form .input-wrapper.action-btn {
+    display: flex;
+    justify-content: end;
+  }
+  
+  .location-form-wrapper .location-form .input-wrapper.action-btn button {
+    padding: 10px;
+    border-radius: 10px;
+  }
+  

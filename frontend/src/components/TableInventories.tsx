@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import DeleteIcon from "./icons/DeleteIcon";
-interface TableProps {
+interface TableInventoriesProps {
   inventories: any;
   locations: any;
   handleDeleteInventory: any;
 }
 
-const Table: React.FC<TableProps> = ({
+const TableInventories: React.FC<TableInventoriesProps> = ({
   inventories,
   locations,
   handleDeleteInventory,
-}: TableProps) => {
+}: TableInventoriesProps) => {
   const handleDelete = async (id: any) => {
     try {
       const response = await fetch(`http://localhost:5000/inventories/${id}`, {
         method: "DELETE",
       });
+
       if (response.ok) {
         handleDeleteInventory();
       } else {
@@ -66,4 +67,4 @@ const Table: React.FC<TableProps> = ({
   );
 };
 
-export default Table;
+export default TableInventories;

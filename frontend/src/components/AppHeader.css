@@ -1,0 +1,27 @@
+.container .app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.container .app-header nav {
+  display: flex;
+  gap: 20px;
+}
+
+.container .app-header nav a {
+  color: black;
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+.container .app-header nav a:hover {
+  background-color: grey;
+  color: white;
+}
+.container .app-header nav a.active-page {
+  background-color: black;
+  color: white;
+}

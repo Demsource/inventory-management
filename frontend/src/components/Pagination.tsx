@@ -4,19 +4,21 @@ interface PaginationProps {
   page: any;
   limit: any;
   total: any;
-  paginate: any;
-  nextPage: any;
-  prevPage: any;
+  setPage: any;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   page,
   limit,
   total,
-  paginate,
-  nextPage,
-  prevPage,
+  setPage,
 }: PaginationProps) => {
+  const paginate = (pageNum: number): void => {
+    setPage(pageNum);
+  };
+  const nextPage = () => setPage((currentPage: any) => currentPage + 1);
+  const prevPage = () => setPage((currentPage: any) => currentPage - 1);
+
   const pageNumbers: number[] = [];
 
   for (let i = 1; i <= Math.ceil(total / limit); i++) {

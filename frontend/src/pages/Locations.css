@@ -1,0 +1,22 @@
+.locations {
+  display: flex;
+  flex-direction: column;
+}
+.locations-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.locations-header .sort .input-wrapper .form-floating .form-select {
+  width: 250px;
+  padding: 0;
+  padding-left: 20px;
+}
+
+.locations-header .addition {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

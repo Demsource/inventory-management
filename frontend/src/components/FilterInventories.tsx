@@ -1,17 +1,17 @@
 import React from "react";
 
-interface FilterProps {
-  locationId: any;
-  setLocationId: any;
+interface FilterInventoriesProps {
+  inventoryFilterByLocationId: any;
+  setInventoryFilterByLocationId: any;
   locations: any;
-  setPage: any;
+  setPageInventories: any;
 }
 
-const Filter: React.FC<FilterProps> = ({
-  locationId,
-  setLocationId,
+const FilterInventories: React.FC<FilterInventoriesProps> = ({
+  inventoryFilterByLocationId,
+  setInventoryFilterByLocationId,
   locations,
-  setPage,
+  setPageInventories,
 }) => {
   return (
     <div className="input-wrapper">
@@ -19,10 +19,10 @@ const Filter: React.FC<FilterProps> = ({
         <select
           className="form-select"
           id="options"
-          value={locationId}
+          value={inventoryFilterByLocationId}
           onChange={(e) => {
-            setLocationId(e.target.value);
-            setPage(1);
+            setInventoryFilterByLocationId(e.target.value);
+            setPageInventories(1);
           }}
           required
         >
@@ -38,4 +38,4 @@ const Filter: React.FC<FilterProps> = ({
   );
 };
 
-export default Filter;
+export default FilterInventories;

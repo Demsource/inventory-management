@@ -1,118 +1,211 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Main from "./pages/Main";
+import Inventories from "./pages/Inventories";
 import AddInventory from "./pages/AddInventory";
+import AppHeader from "./components/AppHeader";
+import Locations from "./pages/Locations";
+import AddLocation from "./pages/AddLocation";
+import EditLocation from "./pages/EditLocation";
 
 function App() {
-  // States for the inventories API call
-  const [inventories, setInventories] = useState<any>([]);
-  const [inventoriesError, setInventoriesError] = useState<any>(null);
-  const [loadingInventories, setLoadingInventories] = useState<boolean>(false);
+  // States for the queried inventories API call
+  const [inventoriesQueried, setInventoriesQueried] = useState<any>([]);
+  const [inventoriesQueriedError, setInventoriesQueriedError] =
+    useState<any>(null);
+  const [loadingInventoriesQueried, setLoadingInventoriesQueried] =
+    useState<boolean>(false);
 
-  // States for the locations API call
-  const [locations, setLocations] = useState([]);
-  const [locationsError, setLocationsError] = useState<any>(null);
-  const [loadingLocations, setLoadingLocations] = useState<boolean>(false);
+  // States for the all locations API call
+  const [locationsAll, setLocationsAll] = useState<any>([]);
+  const [locationsAllError, setLocationsAllError] = useState<any>(null);
+  const [loadingLocationsAll, setLoadingLocationsAll] =
+    useState<boolean>(false);
 
-  const [locationId, setLocationId] = useState("all");
-  const [sortOption, setSortOption] = useState("name_ASC");
+  // States for the queried locations API call
+  const [locationsQueried, setLocationsQueried] = useState<any>([]);
+  const [locationsQueriedError, setLocationsQueriedError] = useState<any>(null);
+  const [loadingLocationsQueried, setLoadingLocationsQueried] =
+    useState<boolean>(false);
 
-  const [limit, setLimit] = useState(20);
-  const [offset, setOffset] = useState(0);
-  const [page, setPage] = useState(1);
+  // Filter and Sort Inventories
+  const [inventoryFilterByLocationId, setInventoryFilterByLocationId] =
+    useState("all");
+  const [inventorySortOption, setInventorySortOption] = useState("name_ASC");
 
-  const fetchInventories = async () => {
-    setLoadingInventories(true);
+  // Pagination of Inventories
+  const [limitInventories, setLimitInventories] = useState(20);
+  const [offsetInventories, setOffsetInventories] = useState(0);
+  const [pageInventories, setPageInventories] = useState(1);
+
+  // Sort Locations
+  const [locationSortOption, setLocationSortOption] = useState("name_ASC");
+
+  // Pagination of Locations
+  const [limitLocations, setLimitLocations] = useState(20);
+  const [offsetLocations, setOffsetLocations] = useState(0);
+  const [pageLocations, setPageLocations] = useState(1);
+
+  const fetchQueriedInventories = async () => {
+    setLoadingInventoriesQueried(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/inventories?limit=${limit}&offset=${offset}&count=${locationId}&sortBy=${
-          sortOption.split("_")[0]
-        }&order=${sortOption.split("_")[1]}`
+        `http://localhost:5000/inventories?limit=${limitInventories}&offset=${offsetInventories}&count=${inventoryFilterByLocationId}&sortBy=${
+          inventorySortOption.split("_")[0]
+        }&order=${inventorySortOption.split("_")[1]}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
-        5;
       }
       const jsonData = await response.json();
-      setInventories(jsonData);
+      setInventoriesQueried(jsonData);
     } catch (err) {
-      setInventoriesError(err);
+      setInventoriesQueriedError(err);
     } finally {
-      setLoadingInventories(false);
+      setLoadingInventoriesQueried(false);
     }
   };
 
-  const fetchLocations = async () => {
-    setLoadingLocations(true);
+  const fetchAllLocations = async () => {
+    setLoadingLocationsAll(true);
     try {
       const response = await fetch("http://localhost:5000/locations");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const jsonData = await response.json();
-      setLocations(jsonData);
+      setLocationsAll(jsonData);
     } catch (err) {
-      setLocationsError(err);
+      setLocationsAllError(err);
     } finally {
-      setLoadingLocations(false);
+      setLoadingLocationsAll(false);
+    }
+  };
+
+  const fetchQueriedLocations = async () => {
+    setLoadingLocationsQueried(true);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/locations?limit=${limitLocations}&offset=${offsetLocations}&sortBy=${
+          locationSortOption.split("_")[0]
+        }&order=${locationSortOption.split("_")[1]}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const jsonData = await response.json();
+      setLocationsQueried(jsonData);
+    } catch (err) {
+      setLocationsQueriedError(err);
+    } finally {
+      setLoadingLocationsQueried(false);
     }
   };
 
   useEffect(() => {
-    fetchInventories();
-    fetchLocations();
-  }, [limit, offset, locationId, sortOption]);
+    fetchQueriedInventories();
+    fetchAllLocations();
+    fetchQueriedLocations();
+  }, [
+    limitInventories,
+    offsetInventories,
+    inventoryFilterByLocationId,
+    inventorySortOption,
+
+    limitLocations,
+    offsetLocations,
+    locationSortOption,
+  ]);
 
   useEffect(() => {
-    setOffset((page - 1) * limit);
-  }, [page]);
+    setOffsetInventories((pageInventories - 1) * limitInventories);
+  }, [pageInventories]);
+
+  useEffect(() => {
+    setOffsetLocations((pageLocations - 1) * limitLocations);
+  }, [pageLocations]);
 
   const handleDeleteInventory = () => {
-    fetchInventories().then(() => {
-      if (inventories?.inventories?.length === 1 && page > 1) {
-        setPage((prevPage) => prevPage - 1);
-      }
-    });
+    fetchQueriedInventories()
+      .then(() => {
+        if (
+          inventoriesQueried?.inventories?.length === 1 &&
+          pageInventories > 1
+        ) {
+          setPageInventories((prevPage) => prevPage - 1);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  // console.log({ inventories }, { locations });
+  const handleDeleteLocation = () => {
+    fetchQueriedLocations()
+      .then(() => {
+        if (locationsQueried?.locations?.length === 1 && pageLocations > 1) {
+          setPageLocations((prevPage) => prevPage - 1);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-  if (loadingInventories || loadingLocations) {
-    return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
-  }
+    fetchAllLocations();
+    fetchQueriedInventories();
+  };
 
-  if (inventoriesError || locationsError) {
-    return (
-      <h2 style={{ textAlign: "center" }}>
-        Error occurred: {inventoriesError || locationsError}
-      </h2>
-    );
-  }
+  // console.log({ inventoriesQueried }, { locationsAll }, { locationsQueried });
 
   return (
     <div className="container">
-      <h1>Hello World</h1>
+      <AppHeader />
       <Routes>
         <Route
           path="/"
           element={
-            <Main
-              inventories={inventories.inventories}
-              locations={locations}
-              total={inventories.total}
-              limit={limit}
-              page={page}
-              setPage={setPage}
-              locationId={locationId}
-              setLocationId={setLocationId}
-              sortOption={sortOption}
-              setSortOption={setSortOption}
+            <Inventories
+              loadingInventories={loadingInventoriesQueried}
+              loadingLocations={loadingLocationsAll}
+              inventoriesError={inventoriesQueriedError}
+              locationsError={locationsAllError}
+              inventories={inventoriesQueried.inventories}
+              locations={locationsAll.locations}
+              total={inventoriesQueried.total}
+              limitInventories={limitInventories}
+              pageInventories={pageInventories}
+              setPageInventories={setPageInventories}
+              inventoryFilterByLocationId={inventoryFilterByLocationId}
+              setInventoryFilterByLocationId={setInventoryFilterByLocationId}
+              inventorySortOption={inventorySortOption}
+              setInventorySortOption={setInventorySortOption}
               handleDeleteInventory={handleDeleteInventory}
             />
           }
         />
-        <Route path="/add" element={<AddInventory locations={locations} />} />
+        <Route
+          path="/add-inventory"
+          element={<AddInventory locations={locationsAll.locations} />}
+        />
+        <Route
+          path="/locations"
+          element={
+            <Locations
+              locationsError={locationsQueriedError}
+              loadingLocations={loadingLocationsQueried}
+              locations={locationsQueried.locations}
+              total={locationsQueried.total}
+              limitLocations={limitLocations}
+              pageLocations={pageLocations}
+              locationSortOption={locationSortOption}
+              setLocationSortOption={setLocationSortOption}
+              setPageLocations={setPageLocations}
+              handleDeleteLocation={handleDeleteLocation}
+            />
+          }
+        />
+        <Route path="/add-location" element={<AddLocation />} />
+        <Route path="/edit-location/:locationId" element={<EditLocation />} />
       </Routes>
     </div>
   );

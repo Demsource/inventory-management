@@ -9,7 +9,8 @@ interface AddInventoryProps {
 const AddInventory: React.FC<AddInventoryProps> = ({
   locations,
 }: AddInventoryProps) => {
-  const [location, setLocation] = useState(locations[0]?.id);
+  const [location, setLocation] = useState(locations?.[0]?.id);
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
@@ -47,10 +48,10 @@ const AddInventory: React.FC<AddInventoryProps> = ({
 
   return (
     <div className="add-inventory-wrapper">
-      <div className="app-header go-to-home">
+      <div className="add-inventory-header go-to-inventories">
         <Link to={"/"}>
           <button type="button" className="btn btn-dark add-btn">
-            Back to Home Page
+            Back to Inventories Page
           </button>
         </Link>
       </div>

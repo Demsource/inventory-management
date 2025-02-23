@@ -5,7 +5,7 @@ const Location = require("../models/Location");
 const db = require("../config/database");
 const { literal } = require("sequelize");
 
-// Get inventory list and related data
+// Get inventories list and related data
 router.get("/", async (req, res) => {
   const { limit, offset, count, price, sortBy, order } = req.query;
   const data = {};
